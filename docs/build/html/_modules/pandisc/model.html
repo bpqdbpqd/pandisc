@@ -203,7 +203,7 @@
     <span class="k">return</span> <span class="n">line_disk</span></div>
 
 
-<div class="viewcode-block" id="pandisc_gaussian"><a class="viewcode-back" href="../../pandisc.html#pandisc.model.pandisc_gaussian">[docs]</a><span class="k">def</span> <span class="nf">pandisc_gaussian</span><span class="p">(</span><span class="n">v_g</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
+<div class="viewcode-block" id="pandisc_gaussian"><a class="viewcode-back" href="../../pandisc.html#pandisc.model.pandisc_gaussian">[docs]</a><span class="k">def</span> <span class="nf">gaussian</span><span class="p">(</span><span class="n">v_g</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    compute the gaussian component of the model, the integrated flux is</span>
 <span class="sd">    normalized to f</span>
@@ -233,12 +233,12 @@
 <span class="sd">    :rtype: numpy.ndarray</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">line_disk</span><span class="p">,</span> <span class="n">line_gauss</span> <span class="o">=</span> <span class="n">pandisc_model_parts</span><span class="p">(</span><span class="n">para</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">)</span>
+    <span class="n">line_disk</span><span class="p">,</span> <span class="n">line_gauss</span> <span class="o">=</span> <span class="n">model_parts</span><span class="p">(</span><span class="n">para</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">line_disk</span> <span class="o">+</span> <span class="n">line_gauss</span></div>
 
 
-<div class="viewcode-block" id="pandisc_model_parts"><a class="viewcode-back" href="../../pandisc.html#pandisc.model.pandisc_model_parts">[docs]</a><span class="k">def</span> <span class="nf">pandisc_model_parts</span><span class="p">(</span><span class="n">para</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
+<div class="viewcode-block" id="pandisc_model_parts"><a class="viewcode-back" href="../../pandisc.html#pandisc.model.pandisc_model_parts">[docs]</a><span class="k">def</span> <span class="nf">model_parts</span><span class="p">(</span><span class="n">para</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    return the disk and gaussian components separately, useful for plotting</span>
 
@@ -253,7 +253,7 @@
 
     <span class="n">line_disk</span> <span class="o">=</span> <span class="n">pandisc_disk</span><span class="p">(</span>
             <span class="n">v_r</span><span class="o">=</span><span class="n">v_r</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="o">=</span><span class="n">v_sigma</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="n">f</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="n">v_c</span><span class="o">=</span><span class="n">v_c</span><span class="p">,</span> <span class="n">v_arr</span><span class="o">=</span><span class="n">v_arr</span><span class="p">)</span>
-    <span class="n">line_gauss</span> <span class="o">=</span> <span class="n">pandisc_gaussian</span><span class="p">(</span><span class="n">v_g</span><span class="o">=</span><span class="n">v_g</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="n">f</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r</span><span class="p">),</span> <span class="n">v_c</span><span class="o">=</span><span class="n">v_c</span><span class="p">,</span> <span class="n">v_arr</span><span class="o">=</span><span class="n">v_arr</span><span class="p">)</span>
+    <span class="n">line_gauss</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">v_g</span><span class="o">=</span><span class="n">v_g</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="n">f</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r</span><span class="p">),</span> <span class="n">v_c</span><span class="o">=</span><span class="n">v_c</span><span class="p">,</span> <span class="n">v_arr</span><span class="o">=</span><span class="n">v_arr</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">line_disk</span><span class="p">,</span> <span class="n">line_gauss</span></div>
 </pre></div>

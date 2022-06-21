@@ -168,7 +168,7 @@
 <span class="kn">from</span> <span class="nn">.model</span> <span class="kn">import</span> <span class="o">*</span>
 
 
-<div class="viewcode-block" id="pandisc_model_mcmc"><a class="viewcode-back" href="../../pandisc.html#pandisc.fit.pandisc_model_mcmc">[docs]</a><span class="k">def</span> <span class="nf">pandisc_model_mcmc</span><span class="p">(</span><span class="n">para_mcmc</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
+<div class="viewcode-block" id="pandisc_model_mcmc"><a class="viewcode-back" href="../../pandisc.html#pandisc.fit.pandisc_model_mcmc">[docs]</a><span class="k">def</span> <span class="nf">model_mcmc</span><span class="p">(</span><span class="n">para_mcmc</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    helper function for MCMC fit, to generate line model from the parameters</span>
 <span class="sd">    used in fitting</span>
@@ -186,7 +186,7 @@
     <span class="k">return</span> <span class="n">pandisc_model</span><span class="p">([</span><span class="mi">10</span><span class="o">**</span><span class="n">lg_v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">lg_v_g</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span><span class="p">],</span> <span class="n">v_arr</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="pandisc_model_mcmc_parts"><a class="viewcode-back" href="../../pandisc.html#pandisc.fit.pandisc_model_mcmc_parts">[docs]</a><span class="k">def</span> <span class="nf">pandisc_model_mcmc_parts</span><span class="p">(</span><span class="n">para_mcmc</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
+<div class="viewcode-block" id="pandisc_model_mcmc_parts"><a class="viewcode-back" href="../../pandisc.html#pandisc.fit.pandisc_model_mcmc_parts">[docs]</a><span class="k">def</span> <span class="nf">model_mcmc_parts</span><span class="p">(</span><span class="n">para_mcmc</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    return the disk and gaussian components separately using the set of the</span>
 <span class="sd">    parameters used in MCMC fit</span>
@@ -201,7 +201,7 @@
 
     <span class="n">lg_v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">lg_v_g</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span> <span class="o">=</span> <span class="n">para_mcmc</span>
 
-    <span class="k">return</span> <span class="n">pandisc_model_parts</span><span class="p">(</span>
+    <span class="k">return</span> <span class="n">model_parts</span><span class="p">(</span>
             <span class="p">[</span><span class="mi">10</span><span class="o">**</span><span class="n">lg_v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">lg_v_g</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span><span class="p">],</span> <span class="n">v_arr</span><span class="p">)</span></div>
 
 
@@ -252,7 +252,7 @@
 <span class="sd">    :rtype: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">model</span> <span class="o">=</span> <span class="n">pandisc_model_mcmc</span><span class="p">(</span><span class="n">para_mcmc</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">model_mcmc</span><span class="p">(</span><span class="n">para_mcmc</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">)</span>
     <span class="n">likelihood</span> <span class="o">=</span> <span class="o">-</span> <span class="p">((</span><span class="n">spec</span> <span class="o">-</span> <span class="n">model</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
     <span class="k">return</span> <span class="n">likelihood</span></div>

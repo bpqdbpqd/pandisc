@@ -238,7 +238,7 @@ asymmetry of the line, should be in the range (−2/𝜋,2/𝜋)</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pandisc.model.pandisc_gaussian">
-<span class="sig-prename descclassname"><span class="pre">pandisc.model.</span></span><span class="sig-name descname"><span class="pre">pandisc_gaussian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/model.html#pandisc_gaussian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.model.pandisc_gaussian" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pandisc.model.</span></span><span class="sig-name descname"><span class="pre">gaussian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/model.html#pandisc_gaussian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.model.pandisc_gaussian" title="Permalink to this definition">¶</a></dt>
 <dd><p>compute the gaussian component of the model, the integrated flux is
 normalized to f</p>
 <dl class="field-list simple">
@@ -282,7 +282,7 @@ order of (v_r, k, v_sigma, r, v_g, f, v_c)</p></li>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pandisc.model.pandisc_model_parts">
-<span class="sig-prename descclassname"><span class="pre">pandisc.model.</span></span><span class="sig-name descname"><span class="pre">pandisc_model_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">para</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/model.html#pandisc_model_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.model.pandisc_model_parts" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pandisc.model.</span></span><span class="sig-name descname"><span class="pre">model_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">para</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/model.html#pandisc_model_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.model.pandisc_model_parts" title="Permalink to this definition">¶</a></dt>
 <dd><p>return the disk and gaussian components separately, useful for plotting</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -307,7 +307,7 @@ order of (v_r, k, v_sigma, r, v_g, f, v_c)</p></li>
 <p>Functions for MCMC fit formulation</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="pandisc.fit.pandisc_model_mcmc">
-<span class="sig-prename descclassname"><span class="pre">pandisc.fit.</span></span><span class="sig-name descname"><span class="pre">pandisc_model_mcmc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">para_mcmc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/fit.html#pandisc_model_mcmc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.fit.pandisc_model_mcmc" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pandisc.fit.</span></span><span class="sig-name descname"><span class="pre">model_mcmc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">para_mcmc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/fit.html#pandisc_model_mcmc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.fit.pandisc_model_mcmc" title="Permalink to this definition">¶</a></dt>
 <dd><p>helper function for MCMC fit, to generate line model from the parameters
 used in fitting</p>
 <dl class="field-list simple">
@@ -329,7 +329,7 @@ used for MCMC fit, in the oder of (lg_v_r, k, v_sigma, r, lg_v_g, f, v_c)</p></l
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pandisc.fit.pandisc_model_mcmc_parts">
-<span class="sig-prename descclassname"><span class="pre">pandisc.fit.</span></span><span class="sig-name descname"><span class="pre">pandisc_model_mcmc_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">para_mcmc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/fit.html#pandisc_model_mcmc_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.fit.pandisc_model_mcmc_parts" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pandisc.fit.</span></span><span class="sig-name descname"><span class="pre">model_mcmc_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">para_mcmc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/fit.html#pandisc_model_mcmc_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.fit.pandisc_model_mcmc_parts" title="Permalink to this definition">¶</a></dt>
 <dd><p>return the disk and gaussian components separately using the set of the
 parameters used in MCMC fit</p>
 <dl class="field-list simple">

@@ -9,4 +9,4 @@ Documentation
 ---------------
 
 The documentation can be found
-at [https://pandisc.readthedocs.io/en/](https://pandisc.readthedocs.io/en/). 
+at [https://pandisc.readthedocs.io/](https://pandisc.readthedocs.io/en/stable/). 
