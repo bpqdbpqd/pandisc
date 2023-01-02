@@ -1,7 +1,7 @@
 """
 Functions for MCMC fit formulation on H I spectra. If you are interested in
 applying the model on other spectral line, the accepted range of 25 km/s might
-be too small and you may want to change pandisc.SIGMA_MAX to higher value
+be too small, so you may want to change pandisc.SIGMA_MAX to higher value
 """
 
 from .model import *
@@ -43,7 +43,7 @@ def model_mcmc_parts(para_mcmc, v_arr):
     :type v_arr: numpy.ndarray or float
     :return: (disk, gaussian) parts of the model, each part is in the same shape
         as input v_arr
-    :rtype: (numpy.ndarray or float, numpy.ndarray or float)
+    :rtype: tuple[numpy.ndarray or float, numpy.ndarray or float]
     """
 
     lg_v_r, k, v_sigma, r, lg_v_g, f, v_c = para_mcmc
@@ -73,7 +73,8 @@ def ln_priori_flat(para_mcmc, v_arr):
             3 < v_sigma < V_SIGMA_MAX and \
             (0 <= r <= 1) and (8.5 < v_g < 200) and \
             (v_arr.min() < v_c - v_r * r) and \
-            (v_c + v_r * r < v_arr.max()):
+            (v_c + v_r * r < v_arr.max() and \
+            (v_c - v_r * r > v_arr.min()):
         priori = np.log(1/2 * np.pi/4 / (V_SIGMA_MAX - 3) / 1.4)
     else:
         priori = -np.inf
@@ -98,13 +99,13 @@ def ln_priori(para_mcmc, v_arr):
 
     priori = ln_priori_flat(para_mcmc, v_arr)
     if np.isfinite(priori):
-        priori += np.log(0.6) * (1-r)**2 + \
-                  np.log(4/np.pi * 2 / (1 - np.exp(-8/np.pi))) - 4 * abs(k)
+        priori += np.log(4/np.pi / 0.568 / 0.786) + \
+                  np.log(0.44) * (1 - r)**2 - 3 * abs(k)
         if (r > 0) and \
                 (2 * (1 - r)/r/np.sqrt(2 * np.pi) > 10**(lg_v_g - lg_v_r)) and \
                 (1/2 + .3 * v_sigma/v_r > 10**(lg_v_g-lg_v_r)):
             priori += np.log(min(1 - (1 - r)/r * np.sqrt(2/np.pi) * (v_r - v_g),
-                                 1 - (v_r + .6 * v_sigma)/2 / v_g))
+                                 1 - (v_r + .6 * v_sigma)/2/v_g))
     else:
         priori = -np.inf
     return priori

@@ -100,7 +100,7 @@ def model_parts(v_r, k, v_sigma, r, v_g, f, v_c, v_arr):
     :type v_arr: numpy.ndarray or float
     :return: (disk, gaussian) parts of the model, each part is in the same shape
         as input v_arr
-    :rtype: (numpy.ndarray or float, numpy.ndarray or float)
+    :rtype: tuple[numpy.ndarray or float, numpy.ndarray or float]
     """
 
     line_disk = disk(
