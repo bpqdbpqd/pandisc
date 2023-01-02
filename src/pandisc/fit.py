@@ -73,7 +73,7 @@ def ln_priori_flat(para_mcmc, v_arr):
             3 < v_sigma < V_SIGMA_MAX and \
             (0 <= r <= 1) and (8.5 < v_g < 200) and \
             (v_arr.min() < v_c - v_r * r) and \
-            (v_c + v_r * r < v_arr.max() and \
+            (v_c + v_r * r < v_arr.max()) and \
             (v_c - v_r * r > v_arr.min()):
         priori = np.log(1/2 * np.pi/4 / (V_SIGMA_MAX - 3) / 1.4)
     else:
