@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>API &#8212; pandisc 1.0 documentation</title>
+    <title>API &#8212; pandisc 1.1 documentation</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -67,7 +67,7 @@
       
       
       
-      <h1 class="site-logo" id="site-title">pandisc 1.0 documentation</h1>
+      <h1 class="site-logo" id="site-title">pandisc 1.1 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -76,6 +76,23 @@
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Jupyter notebook turotials:
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="tutorial_introduction.html">
+   Theoretical construction of the model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="tutorial_fit.html">
+   MCMC fit on ALFALFA spectrum
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Contents:
  </span>
@@ -211,8 +228,8 @@
 <p>Functions to compute the pandisc model. For the formulation please refer to
 the documentation.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="pandisc.model.pandisc_disk">
-<span class="sig-prename descclassname"><span class="pre">pandisc.model.</span></span><span class="sig-name descname"><span class="pre">pandisc_disk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/model.html#pandisc_disk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.model.pandisc_disk" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pandisc.model.disk">
+<span class="sig-prename descclassname"><span class="pre">pandisc.model.</span></span><span class="sig-name descname"><span class="pre">disk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/model.html#disk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.model.disk" title="Permalink to this definition">¶</a></dt>
 <dd><p>compute the co-rotating disk part of the model, the integrated model flux is
 normalized to f</p>
 <dl class="field-list simple">
@@ -224,21 +241,21 @@ asymmetry of the line, should be in the range (−2/𝜋,2/𝜋)</p></li>
 <li><p><strong>v_sigma</strong> (<em>float</em>) – float, sigma of the disk velocity dispersion</p></li>
 <li><p><strong>f</strong> (<em>float</em>) – float, the integrated flux integrate(f_model dv) of the model</p></li>
 <li><p><strong>v_c</strong> (<em>float</em>) – float, velocity of the line center</p></li>
-<li><p><strong>v_arr</strong> (<em>numpy.ndarray</em>) – array, recording the axis to compute the model</p></li>
+<li><p><strong>v_arr</strong> (<em>numpy.ndarray</em><em> or </em><em>float</em>) – array, recording the axis to compute the model</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>array of the computed model</p>
+<dd class="field-even"><p>array of the computed model, in the same shape as input v_arr</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray</p>
+<dd class="field-odd"><p>numpy.ndarray or float</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pandisc.model.pandisc_gaussian">
-<span class="sig-prename descclassname"><span class="pre">pandisc.model.</span></span><span class="sig-name descname"><span class="pre">gaussian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/model.html#pandisc_gaussian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.model.pandisc_gaussian" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pandisc.model.gaussian">
+<span class="sig-prename descclassname"><span class="pre">pandisc.model.</span></span><span class="sig-name descname"><span class="pre">gaussian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/model.html#gaussian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.model.gaussian" title="Permalink to this definition">¶</a></dt>
 <dd><p>compute the gaussian component of the model, the integrated flux is
 normalized to f</p>
 <dl class="field-list simple">
@@ -247,56 +264,152 @@ normalized to f</p>
 <li><p><strong>v_g</strong> (<em>float</em>) – float, sigma of the gaussian peak</p></li>
 <li><p><strong>f</strong> (<em>float</em>) – float, the integrated flux integrate(f_model dv) of the model</p></li>
 <li><p><strong>v_c</strong> (<em>float</em>) – float, velocity of the line center</p></li>
-<li><p><strong>v_arr</strong> (<em>numpy.ndarray</em>) – array, recording the axis to compute the model</p></li>
+<li><p><strong>v_arr</strong> (<em>numpy.ndarray</em><em> or </em><em>float</em>) – array, recording the axis to compute the model</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>array of the computed model</p>
+<dd class="field-even"><p>array of the computed model, in the same shape as input v_arr</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray</p>
+<dd class="field-odd"><p>numpy.ndarray or float</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pandisc.model.pandisc_model">
-<span class="sig-prename descclassname"><span class="pre">pandisc.model.</span></span><span class="sig-name descname"><span class="pre">pandisc_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">para</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/model.html#pandisc_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.model.pandisc_model" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pandisc.model.model">
+<span class="sig-prename descclassname"><span class="pre">pandisc.model.</span></span><span class="sig-name descname"><span class="pre">model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/model.html#model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.model.model" title="Permalink to this definition">¶</a></dt>
 <dd><p>compute the full pandisc model</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>para</strong> (<em>list</em><em> or </em><em>tuple</em><em> or </em><em>numpy.ndarray</em>) – list or tuple or array, containing all seven parameters in the
-order of (v_r, k, v_sigma, r, v_g, f, v_c)</p></li>
-<li><p><strong>v_arr</strong> (<em>numpy.ndarray</em>) – array, recording the axis to compute the model</p></li>
+<li><p><strong>v_r</strong> (<em>float</em>) – float, rotation velocity of the disk</p></li>
+<li><p><strong>k</strong> (<em>float</em>) – float, gradient of the angular distribution, defining the
+asymmetry of the line, should be in the range (−2/𝜋,2/𝜋)</p></li>
+<li><p><strong>v_sigma</strong> (<em>float</em>) – float, sigma of the disk velocity dispersion</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – float, fraction of the integrated flux in the disk component</p></li>
+<li><p><strong>v_g</strong> (<em>float</em>) – float, sigma of the gaussian peak</p></li>
+<li><p><strong>f</strong> (<em>float</em>) – float, the integrated flux integrate(f_model dv) of the model</p></li>
+<li><p><strong>v_c</strong> (<em>float</em>) – float, velocity of the line center</p></li>
+<li><p><strong>v_arr</strong> (<em>numpy.ndarray</em><em> or </em><em>float</em>) – array, recording the axis to compute the model</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>array of the computed model</p>
+<dd class="field-even"><p>array of the computed model, in the same shape as input v_arr</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray</p>
+<dd class="field-odd"><p>numpy.ndarray or float</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pandisc.model.pandisc_model_parts">
-<span class="sig-prename descclassname"><span class="pre">pandisc.model.</span></span><span class="sig-name descname"><span class="pre">model_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">para</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/model.html#pandisc_model_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.model.pandisc_model_parts" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pandisc.model.model_parts">
+<span class="sig-prename descclassname"><span class="pre">pandisc.model.</span></span><span class="sig-name descname"><span class="pre">model_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/model.html#model_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.model.model_parts" title="Permalink to this definition">¶</a></dt>
 <dd><p>return the disk and gaussian components separately, useful for plotting</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>para</strong> (<em>list</em><em> or </em><em>tuple</em><em> or </em><em>numpy.ndarray</em>) – list or tuple or array, containing all seven parameters in the
-order of (v_r, k, v_sigma, r, v_g, f, v_c)</p></li>
-<li><p><strong>v_arr</strong> (<em>numpy.ndarray</em>) – array, recording the axis to compute the model</p></li>
+<li><p><strong>v_r</strong> (<em>float</em>) – float, rotation velocity of the disk</p></li>
+<li><p><strong>k</strong> (<em>float</em>) – float, gradient of the angular distribution, defining the
+asymmetry of the line, should be in the range (−2/𝜋,2/𝜋)</p></li>
+<li><p><strong>v_sigma</strong> (<em>float</em>) – float, sigma of the disk velocity dispersion</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – float, fraction of the integrated flux in the disk component</p></li>
+<li><p><strong>v_g</strong> (<em>float</em>) – float, sigma of the gaussian peak</p></li>
+<li><p><strong>f</strong> (<em>float</em>) – float, the integrated flux integrate(f_model dv) of the model</p></li>
+<li><p><strong>v_c</strong> (<em>float</em>) – float, velocity of the line center</p></li>
+<li><p><strong>v_arr</strong> (<em>numpy.ndarray</em><em> or </em><em>float</em>) – array, recording the axis to compute the model</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>array of the computed model</p>
+<dd class="field-even"><p>(disk, gaussian) parts of the model, each part is in the same shape
+as input v_arr</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray</p>
+<dd class="field-odd"><p>tuple[numpy.ndarray or float, numpy.ndarray or float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pandisc.model.disk_fwhm">
+<span class="sig-prename descclassname"><span class="pre">pandisc.model.</span></span><span class="sig-name descname"><span class="pre">disk_fwhm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/model.html#disk_fwhm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.model.disk_fwhm" title="Permalink to this definition">¶</a></dt>
+<dd><p>estimate the line full width half maximum of the disk component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v_r</strong> (<em>float</em>) – float, rotation velocity of the disk</p></li>
+<li><p><strong>v_sigma</strong> (<em>float</em>) – float, sigma of the disk velocity dispersion</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>float, the estimated line width</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pandisc.model.disk_peak_width">
+<span class="sig-prename descclassname"><span class="pre">pandisc.model.</span></span><span class="sig-name descname"><span class="pre">disk_peak_width</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/model.html#disk_peak_width"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.model.disk_peak_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>estimate the line width between the two peaks of the disk component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v_r</strong> (<em>float</em>) – float, rotation velocity of the disk</p></li>
+<li><p><strong>v_sigma</strong> (<em>float</em>) – float, sigma of the disk velocity dispersion</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>float, the estimated line width between peaks</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pandisc.model.disk_peak_flux">
+<span class="sig-prename descclassname"><span class="pre">pandisc.model.</span></span><span class="sig-name descname"><span class="pre">disk_peak_flux</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/model.html#disk_peak_flux"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.model.disk_peak_flux" title="Permalink to this definition">¶</a></dt>
+<dd><p>estimate the flux density of the peaks of the disk component</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v_r</strong> (<em>float</em>) – float, rotation velocity of the disk</p></li>
+<li><p><strong>v_sigma</strong> (<em>float</em>) – float, sigma of the disk velocity dispersion</p></li>
+<li><p><strong>f</strong> (<em>float</em>) – float, the integrated flux of the disk component</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>float, the estimated line width between peaks</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pandisc.model.w50m">
+<span class="sig-prename descclassname"><span class="pre">pandisc.model.</span></span><span class="sig-name descname"><span class="pre">w50m</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_g</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/model.html#w50m"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.model.w50m" title="Permalink to this definition">¶</a></dt>
+<dd><p>estimate the W50 of the line based on the line model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v_r</strong> (<em>float</em>) – float, rotation velocity of the disk</p></li>
+<li><p><strong>v_sigma</strong> (<em>float</em>) – float, sigma of the disk velocity dispersion</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – float, fraction of the integrated flux in the disk component</p></li>
+<li><p><strong>v_g</strong> (<em>float</em>) – float, sigma of the gaussian peak</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>float, W50 model</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -304,10 +417,12 @@ order of (v_r, k, v_sigma, r, v_g, f, v_c)</p></li>
 </div>
 <div class="section" id="module-pandisc.fit">
 <span id="pandisc-fit"></span><h2><a class="reference internal" href="#module-pandisc.fit" title="pandisc.fit"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pandisc.fit</span></code></a><a class="headerlink" href="#module-pandisc.fit" title="Permalink to this heading">¶</a></h2>
-<p>Functions for MCMC fit formulation</p>
+<p>Functions for MCMC fit formulation on H I spectra. If you are interested in
+applying the model on other spectral line, the accepted range of 25 km/s might
+be too small, so you may want to change pandisc.SIGMA_MAX to higher value</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="pandisc.fit.pandisc_model_mcmc">
-<span class="sig-prename descclassname"><span class="pre">pandisc.fit.</span></span><span class="sig-name descname"><span class="pre">model_mcmc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">para_mcmc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/fit.html#pandisc_model_mcmc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.fit.pandisc_model_mcmc" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pandisc.fit.model_mcmc">
+<span class="sig-prename descclassname"><span class="pre">pandisc.fit.</span></span><span class="sig-name descname"><span class="pre">model_mcmc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">para_mcmc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/fit.html#model_mcmc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.fit.model_mcmc" title="Permalink to this definition">¶</a></dt>
 <dd><p>helper function for MCMC fit, to generate line model from the parameters
 used in fitting</p>
 <dl class="field-list simple">
@@ -315,23 +430,46 @@ used in fitting</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>para_mcmc</strong> (<em>list</em><em> or </em><em>tuple</em><em> or </em><em>numpy.ndarray</em>) – list or tuple or array, containing the seven parameters
 used for MCMC fit, in the oder of (lg_v_r, k, v_sigma, r, lg_v_g, f, v_c)</p></li>
-<li><p><strong>v_arr</strong> (<em>numpy.ndarray</em>) – array, recording the axis to compute the model</p></li>
+<li><p><strong>v_arr</strong> (<em>numpy.ndarray</em><em> or </em><em>float</em>) – array, recording the axis to compute the model</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>array of the computed model</p>
+<dd class="field-even"><p>array of the computed model, in the same shape as input v_arr</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray</p>
+<dd class="field-odd"><p>numpy.ndarray or float</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="pandisc.fit.pandisc_model_mcmc_parts">
-<span class="sig-prename descclassname"><span class="pre">pandisc.fit.</span></span><span class="sig-name descname"><span class="pre">model_mcmc_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">para_mcmc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/fit.html#pandisc_model_mcmc_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.fit.pandisc_model_mcmc_parts" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pandisc.fit.model_mcmc_parts">
+<span class="sig-prename descclassname"><span class="pre">pandisc.fit.</span></span><span class="sig-name descname"><span class="pre">model_mcmc_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">para_mcmc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/fit.html#model_mcmc_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.fit.model_mcmc_parts" title="Permalink to this definition">¶</a></dt>
 <dd><p>return the disk and gaussian components separately using the set of the
 parameters used in MCMC fit</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>para_mcmc</strong> (<em>list</em><em> or </em><em>tuple</em><em> or </em><em>numpy.ndarray</em>) – list or tuple or array, containing the seven parameters
+used for MCMC fit, in the oder of (lg_v_r, k, v_sigma, r, lg_v_g, f, v_c)</p></li>
+<li><p><strong>v_arr</strong> (<em>numpy.ndarray</em><em> or </em><em>float</em>) – array, recording the axis to compute the model</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>(disk, gaussian) parts of the model, each part is in the same shape
+as input v_arr</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple[numpy.ndarray or float, numpy.ndarray or float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pandisc.fit.ln_priori_flat">
+<span class="sig-prename descclassname"><span class="pre">pandisc.fit.</span></span><span class="sig-name descname"><span class="pre">ln_priori_flat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">para_mcmc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_arr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pandisc/fit.html#ln_priori_flat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pandisc.fit.ln_priori_flat" title="Permalink to this definition">¶</a></dt>
+<dd><p>a flat priori function defined in the paper, only checking the range of the
+input parameters</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -341,10 +479,10 @@ used for MCMC fit, in the oder of (lg_v_r, k, v_sigma, r, lg_v_g, f, v_c)</p></l
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>array of the computed model</p>
+<dd class="field-even"><p>float, log e of the priori</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray</p>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>

@@ -1,10 +1,12 @@
-.. pandisc documentation master file, created by
-   sphinx-quickstart on Wed Jun  8 14:12:34 2022.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 PANDISC
 ===================================
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Jupyter notebook turotials:
+
+   Introduction of the model <tutorial_introduction>
+   MCMC fit on ALFALFA spectrum <tutorial_fit>
 
 .. toctree::
    :maxdepth: 2
@@ -14,6 +16,9 @@ PANDISC
    Readme <README.md>
    pandisc
 
+Changelog
+=========
+.. include:: CHANGELOG.md
 
 Indices and tables
 ==================

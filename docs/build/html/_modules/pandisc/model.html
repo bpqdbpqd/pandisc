@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pandisc.model &#8212; pandisc 1.0 documentation</title>
+    <title>pandisc.model &#8212; pandisc 1.1 documentation</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -66,7 +66,7 @@
       
       
       
-      <h1 class="site-logo" id="site-title">pandisc 1.0 documentation</h1>
+      <h1 class="site-logo" id="site-title">pandisc 1.1 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
@@ -75,6 +75,23 @@
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Jupyter notebook turotials:
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tutorial_introduction.html">
+   Theoretical construction of the model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tutorial_fit.html">
+   MCMC fit on ALFALFA spectrum
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Contents:
  </span>
@@ -169,7 +186,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
-<div class="viewcode-block" id="pandisc_disk"><a class="viewcode-back" href="../../pandisc.html#pandisc.model.pandisc_disk">[docs]</a><span class="k">def</span> <span class="nf">pandisc_disk</span><span class="p">(</span><span class="n">v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
+<div class="viewcode-block" id="disk"><a class="viewcode-back" href="../../pandisc.html#pandisc.model.disk">[docs]</a><span class="k">def</span> <span class="nf">disk</span><span class="p">(</span><span class="n">v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    compute the co-rotating disk part of the model, the integrated model flux is</span>
 <span class="sd">    normalized to f</span>
@@ -180,9 +197,10 @@
 <span class="sd">    :param float v_sigma: float, sigma of the disk velocity dispersion</span>
 <span class="sd">    :param float f: float, the integrated flux integrate(f_model dv) of the model</span>
 <span class="sd">    :param float v_c: float, velocity of the line center</span>
-<span class="sd">    :param numpy.ndarray v_arr: array, recording the axis to compute the model</span>
-<span class="sd">    :return: array of the computed model</span>
-<span class="sd">    :rtype: numpy.ndarray</span>
+<span class="sd">    :param v_arr: array, recording the axis to compute the model</span>
+<span class="sd">    :type v_arr: numpy.ndarray or float</span>
+<span class="sd">    :return: array of the computed model, in the same shape as input v_arr</span>
+<span class="sd">    :rtype: numpy.ndarray or float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">line_disk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">v_arr</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
@@ -203,7 +221,7 @@
     <span class="k">return</span> <span class="n">line_disk</span></div>
 
 
-<div class="viewcode-block" id="pandisc_gaussian"><a class="viewcode-back" href="../../pandisc.html#pandisc.model.pandisc_gaussian">[docs]</a><span class="k">def</span> <span class="nf">gaussian</span><span class="p">(</span><span class="n">v_g</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
+<div class="viewcode-block" id="gaussian"><a class="viewcode-back" href="../../pandisc.html#pandisc.model.gaussian">[docs]</a><span class="k">def</span> <span class="nf">gaussian</span><span class="p">(</span><span class="n">v_g</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    compute the gaussian component of the model, the integrated flux is</span>
 <span class="sd">    normalized to f</span>
@@ -211,9 +229,10 @@
 <span class="sd">    :param float v_g: float, sigma of the gaussian peak</span>
 <span class="sd">    :param float f: float, the integrated flux integrate(f_model dv) of the model</span>
 <span class="sd">    :param float v_c: float, velocity of the line center</span>
-<span class="sd">    :param numpy.ndarray v_arr: array, recording the axis to compute the model</span>
-<span class="sd">    :return: array of the computed model</span>
-<span class="sd">    :rtype: numpy.ndarray</span>
+<span class="sd">    :param v_arr: array, recording the axis to compute the model</span>
+<span class="sd">    :type v_arr: numpy.ndarray or float</span>
+<span class="sd">    :return: array of the computed model, in the same shape as input v_arr</span>
+<span class="sd">    :rtype: numpy.ndarray or float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">line_gauss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">v_arr</span> <span class="o">-</span> <span class="n">v_c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">v_g</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> \
                  <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">/</span> <span class="n">v_g</span> <span class="o">*</span> <span class="n">f</span>
@@ -221,41 +240,123 @@
     <span class="k">return</span> <span class="n">line_gauss</span></div>
 
 
-<div class="viewcode-block" id="pandisc_model"><a class="viewcode-back" href="../../pandisc.html#pandisc.model.pandisc_model">[docs]</a><span class="k">def</span> <span class="nf">pandisc_model</span><span class="p">(</span><span class="n">para</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
+<div class="viewcode-block" id="model"><a class="viewcode-back" href="../../pandisc.html#pandisc.model.model">[docs]</a><span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">v_g</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    compute the full pandisc model</span>
 
-<span class="sd">    :param para: list or tuple or array, containing all seven parameters in the</span>
-<span class="sd">        order of (v_r, k, v_sigma, r, v_g, f, v_c)</span>
-<span class="sd">    :type para: list or tuple or numpy.ndarray</span>
-<span class="sd">    :param numpy.ndarray v_arr: array, recording the axis to compute the model</span>
-<span class="sd">    :return: array of the computed model</span>
-<span class="sd">    :rtype: numpy.ndarray</span>
+<span class="sd">    :param float v_r: float, rotation velocity of the disk</span>
+<span class="sd">    :param float k: float, gradient of the angular distribution, defining the</span>
+<span class="sd">        asymmetry of the line, should be in the range (−2/𝜋,2/𝜋)</span>
+<span class="sd">    :param float v_sigma: float, sigma of the disk velocity dispersion</span>
+<span class="sd">    :param float r: float, fraction of the integrated flux in the disk component</span>
+<span class="sd">    :param float v_g: float, sigma of the gaussian peak</span>
+<span class="sd">    :param float f: float, the integrated flux integrate(f_model dv) of the model</span>
+<span class="sd">    :param float v_c: float, velocity of the line center</span>
+<span class="sd">    :param v_arr: array, recording the axis to compute the model</span>
+<span class="sd">    :type v_arr: numpy.ndarray or float</span>
+<span class="sd">    :return: array of the computed model, in the same shape as input v_arr</span>
+<span class="sd">    :rtype: numpy.ndarray or float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">line_disk</span><span class="p">,</span> <span class="n">line_gauss</span> <span class="o">=</span> <span class="n">model_parts</span><span class="p">(</span><span class="n">para</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">)</span>
+    <span class="n">line_disk</span><span class="p">,</span> <span class="n">line_gauss</span> <span class="o">=</span> <span class="n">model_parts</span><span class="p">(</span><span class="n">v_r</span><span class="o">=</span><span class="n">v_r</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="o">=</span><span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span>
+                                        <span class="n">v_g</span><span class="o">=</span><span class="n">v_g</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">v_c</span><span class="o">=</span><span class="n">v_c</span><span class="p">,</span> <span class="n">v_arr</span><span class="o">=</span><span class="n">v_arr</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">line_disk</span> <span class="o">+</span> <span class="n">line_gauss</span></div>
 
 
-<div class="viewcode-block" id="pandisc_model_parts"><a class="viewcode-back" href="../../pandisc.html#pandisc.model.pandisc_model_parts">[docs]</a><span class="k">def</span> <span class="nf">model_parts</span><span class="p">(</span><span class="n">para</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
+<div class="viewcode-block" id="model_parts"><a class="viewcode-back" href="../../pandisc.html#pandisc.model.model_parts">[docs]</a><span class="k">def</span> <span class="nf">model_parts</span><span class="p">(</span><span class="n">v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">v_g</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    return the disk and gaussian components separately, useful for plotting</span>
 
-<span class="sd">    :param para: list or tuple or array, containing all seven parameters in the</span>
-<span class="sd">        order of (v_r, k, v_sigma, r, v_g, f, v_c)</span>
-<span class="sd">    :type para: list or tuple or numpy.ndarray</span>
-<span class="sd">    :param numpy.ndarray v_arr: array, recording the axis to compute the model</span>
-<span class="sd">    :return: array of the computed model</span>
-<span class="sd">    :rtype: numpy.ndarray</span>
+<span class="sd">    :param float v_r: float, rotation velocity of the disk</span>
+<span class="sd">    :param float k: float, gradient of the angular distribution, defining the</span>
+<span class="sd">        asymmetry of the line, should be in the range (−2/𝜋,2/𝜋)</span>
+<span class="sd">    :param float v_sigma: float, sigma of the disk velocity dispersion</span>
+<span class="sd">    :param float r: float, fraction of the integrated flux in the disk component</span>
+<span class="sd">    :param float v_g: float, sigma of the gaussian peak</span>
+<span class="sd">    :param float f: float, the integrated flux integrate(f_model dv) of the model</span>
+<span class="sd">    :param float v_c: float, velocity of the line center</span>
+<span class="sd">    :param v_arr: array, recording the axis to compute the model</span>
+<span class="sd">    :type v_arr: numpy.ndarray or float</span>
+<span class="sd">    :return: (disk, gaussian) parts of the model, each part is in the same shape</span>
+<span class="sd">        as input v_arr</span>
+<span class="sd">    :rtype: tuple[numpy.ndarray or float, numpy.ndarray or float]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">v_g</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span> <span class="o">=</span> <span class="n">para</span>
 
-    <span class="n">line_disk</span> <span class="o">=</span> <span class="n">pandisc_disk</span><span class="p">(</span>
+    <span class="n">line_disk</span> <span class="o">=</span> <span class="n">disk</span><span class="p">(</span>
             <span class="n">v_r</span><span class="o">=</span><span class="n">v_r</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="o">=</span><span class="n">v_sigma</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="n">f</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="n">v_c</span><span class="o">=</span><span class="n">v_c</span><span class="p">,</span> <span class="n">v_arr</span><span class="o">=</span><span class="n">v_arr</span><span class="p">)</span>
     <span class="n">line_gauss</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">v_g</span><span class="o">=</span><span class="n">v_g</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="n">f</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r</span><span class="p">),</span> <span class="n">v_c</span><span class="o">=</span><span class="n">v_c</span><span class="p">,</span> <span class="n">v_arr</span><span class="o">=</span><span class="n">v_arr</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">line_disk</span><span class="p">,</span> <span class="n">line_gauss</span></div>
+
+
+<div class="viewcode-block" id="disk_fwhm"><a class="viewcode-back" href="../../pandisc.html#pandisc.model.disk_fwhm">[docs]</a><span class="k">def</span> <span class="nf">disk_fwhm</span><span class="p">(</span><span class="n">v_r</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    estimate the line full width half maximum of the disk component</span>
+
+<span class="sd">    :param float v_r: float, rotation velocity of the disk</span>
+<span class="sd">    :param float v_sigma: float, sigma of the disk velocity dispersion</span>
+<span class="sd">    :return: float, the estimated line width</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">((</span><span class="n">v_r</span> <span class="o">+</span> <span class="mf">0.7</span> <span class="o">*</span> <span class="n">v_sigma</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">v_r</span><span class="o">/</span><span class="n">v_sigma</span> <span class="o">*</span> <span class="mf">1.2</span><span class="p">))</span> <span class="o">+</span>
+                <span class="p">(</span><span class="n">v_r</span> <span class="o">+</span> <span class="mf">1.2</span> <span class="o">*</span> <span class="n">v_sigma</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">v_r</span><span class="o">/</span><span class="n">v_sigma</span> <span class="o">*</span> <span class="mf">1.8</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="disk_peak_width"><a class="viewcode-back" href="../../pandisc.html#pandisc.model.disk_peak_width">[docs]</a><span class="k">def</span> <span class="nf">disk_peak_width</span><span class="p">(</span><span class="n">v_r</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    estimate the line width between the two peaks of the disk component</span>
+
+<span class="sd">    :param float v_r: float, rotation velocity of the disk</span>
+<span class="sd">    :param float v_sigma: float, sigma of the disk velocity dispersion</span>
+<span class="sd">    :return: float, the estimated line width between peaks</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">v_r</span> <span class="o">&gt;</span> <span class="mf">1.7</span> <span class="o">*</span> <span class="n">v_sigma</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">v_r</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">v_sigma</span><span class="p">)</span> <span class="o">*</span> \
+           <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">v_r</span><span class="o">/</span><span class="n">v_sigma</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="disk_peak_flux"><a class="viewcode-back" href="../../pandisc.html#pandisc.model.disk_peak_flux">[docs]</a><span class="k">def</span> <span class="nf">disk_peak_flux</span><span class="p">(</span><span class="n">v_r</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    estimate the flux density of the peaks of the disk component</span>
+
+<span class="sd">    :param float v_r: float, rotation velocity of the disk</span>
+<span class="sd">    :param float v_sigma: float, sigma of the disk velocity dispersion</span>
+<span class="sd">    :param float f: float, the integrated flux of the disk component</span>
+<span class="sd">    :return: float, the estimated line width between peaks</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">f</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mf">0.27</span> <span class="o">*</span> <span class="n">v_sigma</span><span class="o">/</span><span class="n">v_r</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">v_sigma</span> <span class="o">*</span>
+                <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">v_r</span><span class="o">/</span><span class="n">v_sigma</span><span class="o">*</span><span class="mf">1.8</span><span class="p">))</span> <span class="o">+</span>
+                <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">/</span><span class="n">v_sigma</span> <span class="o">-</span> <span class="mf">.013</span><span class="p">)</span> <span class="o">*</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">v_r</span><span class="o">/</span><span class="n">v_sigma</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="w50m"><a class="viewcode-back" href="../../pandisc.html#pandisc.model.w50m">[docs]</a><span class="k">def</span> <span class="nf">w50m</span><span class="p">(</span><span class="n">v_r</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">v_g</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    estimate the W50 of the line based on the line model</span>
+
+<span class="sd">    :param float v_r: float, rotation velocity of the disk</span>
+<span class="sd">    :param float v_sigma: float, sigma of the disk velocity dispersion</span>
+<span class="sd">    :param float r: float, fraction of the integrated flux in the disk component</span>
+<span class="sd">    :param float v_g: float, sigma of the gaussian peak</span>
+<span class="sd">    :return: float, W50 model</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">disk_width</span> <span class="o">=</span> <span class="n">disk_fwhm</span><span class="p">(</span><span class="n">v_r</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">)</span>
+    <span class="n">peak_width</span> <span class="o">=</span> <span class="n">disk_peak_width</span><span class="p">(</span><span class="n">v_r</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">)</span>
+    <span class="n">disk_flux</span> <span class="o">=</span> <span class="n">disk_peak_flux</span><span class="p">(</span><span class="n">v_r</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+    <span class="n">gauss_flux</span> <span class="o">=</span> <span class="p">(</span><span class="n">gaussian</span><span class="p">(</span><span class="n">v_g</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">disk_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span>
+                  <span class="n">gaussian</span><span class="p">(</span><span class="n">v_g</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">peak_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="n">gauss_frac</span> <span class="o">=</span> <span class="p">(</span><span class="n">gauss_flux</span><span class="o">/</span><span class="p">(</span><span class="n">disk_flux</span> <span class="o">+</span> <span class="n">gauss_flux</span><span class="p">))</span>
+    <span class="n">disk_frac</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">gauss_frac</span>
+    <span class="n">w50m</span> <span class="o">=</span> <span class="n">disk_frac</span> <span class="o">*</span> <span class="n">disk_width</span> <span class="o">+</span> <span class="n">gauss_frac</span> <span class="o">*</span> <span class="mf">2.355</span> <span class="o">*</span> <span class="n">v_g</span>
+
+    <span class="k">return</span> <span class="n">w50m</span></div>
 </pre></div>
 
               </div>

@@ -1,0 +1,571 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Theoretical construction of the model &#8212; pandisc 1.1 documentation</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Fitting the model to a galaxy" href="tutorial_fit.html" />
+    <link rel="prev" title="PANDISC" href="index.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">pandisc 1.1 documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Jupyter notebook turotials:
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Theoretical construction of the model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="tutorial_fit.html">
+   MCMC fit on ALFALFA spectrum
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="README.html">
+   Readme
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pandisc.html">
+   API
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/tutorial_introduction.ipynb.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/bpqdbpqd/pandisc"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Theoretical construction of the model
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#line-emission-from-a-co-rotating-disk">
+     Line emission from a co-rotating disk
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#line-emission-from-an-asymmetric-disk">
+     Line emission from an asymmetric disk
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#line-emission-from-a-disk-with-velocity-dispersion">
+     Line emission from a disk with velocity dispersion
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#add-a-gaussian-component">
+     Add a gaussian component
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assemble-a-galaxy">
+   Assemble a galaxy
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#computing-widths">
+     Computing widths
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="theoretical-construction-of-the-model">
+<h1>Theoretical construction of the model<a class="headerlink" href="#theoretical-construction-of-the-model" title="Permalink to this heading">¶</a></h1>
+<p>The model only contains two components</p>
+<ul class="simple">
+<li><p>a disk characterised by</p>
+<ul>
+<li><p>projected rotational velocity <span class="math notranslate nohighlight">\(v_r = v_\mathrm{rot} \sin \theta\)</span></p></li>
+<li><p>an asymmetric factor (explained later) <span class="math notranslate nohighlight">\(k\)</span></p></li>
+<li><p>gas cloud velocity dispersion <span class="math notranslate nohighlight">\(v_\sigma\)</span></p></li>
+</ul>
+</li>
+<li><p>a gaussian peak component charaterised by</p>
+<ul>
+<li><p>disk flux fraction <span class="math notranslate nohighlight">\(r\)</span></p></li>
+<li><p>Gaussian peak STD <span class="math notranslate nohighlight">\(v_g\)</span></p></li>
+</ul>
+</li>
+</ul>
+<p>And besides the 5 parameters above, another two parameter denoting total H I flux <span class="math notranslate nohighlight">\(F\)</span> and line centre velocity <span class="math notranslate nohighlight">\(v_c\)</span> is required.</p>
+<div class="section" id="line-emission-from-a-co-rotating-disk">
+<h2>Line emission from a co-rotating disk<a class="headerlink" href="#line-emission-from-a-co-rotating-disk" title="Permalink to this heading">¶</a></h2>
+<p>First consider a pure rotationally dominated disk at a single rotational speed <span class="math notranslate nohighlight">\(v_\mathrm{rot}\)</span>, the emission in each observed velocity bin <span class="math notranslate nohighlight">\(\mathrm{d}v_{\mathrm{l.o.s}}\)</span> is given by
+\begin{equation}\begin{split}
+\frac{\mathrm{d}F}{\mathrm{d}v_\mathrm{l.o.s}} = \frac{\mathrm{d}F}{\mathrm{d}m} \frac{\mathrm{d}m}{\mathrm{d}\phi}\left|\frac{\mathrm{d}\phi}{\mathrm{d}v_\mathrm{l.o.s}}\right|
+\end{split}\end{equation}</p>
+<p>in which <span class="math notranslate nohighlight">\(\phi\)</span> is the angle in disk frame, defined as angle of disk element from tranverse to l.o.s. In the R.h.S, the first two components are constant intrinsic to HI emission and assumed uniform angular mass distribution due to symmetry. Hence the only useful thing is the last term. Since <span class="math notranslate nohighlight">\(v_r = v_\mathrm{rot}\sin(\theta)\)</span> is defined as the projected rotational velocity, and <span class="math notranslate nohighlight">\(v_\mathrm{l.o.s} = v_\mathrm{rot}\sin(\theta) \cos(\phi)\)</span>, the line shape of this  model is
+\begin{equation}\begin{split}
+\frac{\mathrm{d}F}{\mathrm{d}v_\mathrm{l.o.s}} \propto \left|\frac{\mathrm{d}}{\mathrm{d}v_{\mathrm{l.o.s}}} \arccos \left( \frac{v_\mathrm{l.o.s}}{v_r} \right) \right|=\frac{1}{\sqrt{v_r^2-v_\mathrm{l.o.s}^2}}
+\end{split}\end{equation}
+The integral of the expression is <span class="math notranslate nohighlight">\(\pi\)</span>.</p>
+<p>An example spectrum with <span class="math notranslate nohighlight">\(v_{rot}=200\ \mathrm{km/s}\)</span> and <span class="math notranslate nohighlight">\(\theta=30\)</span> is shown below, note that the two edges are singularities.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># co-rotating disk model</span>
+<span class="n">v_r</span> <span class="o">=</span> <span class="mi">200</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">30</span><span class="o">/</span><span class="mi">180</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">v_los</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">v_r</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="n">v_r</span><span class="o">+</span><span class="mi">30</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">line</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">v_r</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">v_los</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">line</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">line</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">v_los</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">.05</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$v_\mathrm{l.o.s.}$&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/tutorial_introduction_6_0.png" src="_images/tutorial_introduction_6_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="line-emission-from-an-asymmetric-disk">
+<h2>Line emission from an asymmetric disk<a class="headerlink" href="#line-emission-from-an-asymmetric-disk" title="Permalink to this heading">¶</a></h2>
+<p>Now consider an asymmetric case. The extent of asymmetry is decribed by <span class="math notranslate nohighlight">\(k \in (-2/\pi, 2/\pi)\)</span>, normalised mass slope,
+\begin{equation}\begin{split}
+k \propto \frac{ \mathrm{d}(\mathrm{d} m/\mathrm{d}\phi)}{\mathrm{d}\phi}\frac{2\pi}{M}
+\end{split}\end{equation}</p>
+<p>in which <span class="math notranslate nohighlight">\(\phi \in [0,\pi]\)</span>. In order to normalise to <span class="math notranslate nohighlight">\(1\)</span>
+\begin{equation}\begin{split}
+\frac{2\pi}{M}\frac{ \mathrm{d}m}{\mathrm{d}\phi}\bigg|_\phi \propto 1+ k(\phi - \pi/2)
+\end{split}\end{equation}</p>
+<p>In this definition, a positive <span class="math notranslate nohighlight">\(k\)</span> corresponds to a larger peak in the approaching (blue, lower v) side.</p>
+<p>and line intensity becomes
+\begin{equation}\begin{split}
+\frac{\mathrm{d}F}{\mathrm{d}v_\mathrm{l.o.s}} \propto \frac{1}{\sqrt{v_r^2-v_\mathrm{l.o.s}^2}}  \left{ 1 + k \left[ \arccos \left( \frac{v_\mathrm{l.o.s}}{v_r} \right) - \frac{\pi}{2} \right] \right}
+\end{split}\end{equation}</p>
+<p>The integral of the expression is still <span class="math notranslate nohighlight">\(\pi\)</span>.</p>
+<p>Shown below is an example of <span class="math notranslate nohighlight">\(k=1/\pi\)</span>, and the same parameter as the previous plot. In this case the mass ratio is <span class="math notranslate nohighlight">\(5/3\)</span>, and line ratio <span class="math notranslate nohighlight">\(3/1\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># angular density </span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">phiphi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phiphi</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">k</span> <span class="o">*</span> <span class="p">(</span><span class="n">phiphi</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\phi$&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\mathrm</span><span class="si">{d}</span><span class="s2">M\ /\ \mathrm</span><span class="si">{d}</span><span class="s2">\phi$&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$\\mathrm{d}M\\ /\\ \\mathrm{d}\\phi$&#39;)
+</pre></div>
+</div>
+<img alt="_images/tutorial_introduction_10_1.png" src="_images/tutorial_introduction_10_1.png" />
+</div>
+</div>
+<p>The spectrum now is plotted below</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># asymmetric co-rotating disk</span>
+<span class="n">v_r</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">200</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">30</span><span class="o">/</span><span class="mi">180</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">v_los</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">v_r</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="n">v_r</span><span class="o">+</span><span class="mi">30</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">line</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">v_r</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">v_los</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">k</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">v_los</span><span class="o">/</span><span class="n">v_r</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">line</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">line</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">v_los</span><span class="p">,</span><span class="n">line</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">.05</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$v_\mathrm{l.o.s.}$&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/tutorial_introduction_12_0.png" src="_images/tutorial_introduction_12_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="line-emission-from-a-disk-with-velocity-dispersion">
+<h2>Line emission from a disk with velocity dispersion<a class="headerlink" href="#line-emission-from-a-disk-with-velocity-dispersion" title="Permalink to this heading">¶</a></h2>
+<p>Finally for this disk, we add gas cloud dispersion to it. Then the line intensity becomes
+\begin{equation}\begin{split}
+\frac{\mathrm{d}F}{\mathrm{d}v_\mathrm{l.o.s}} &amp;= \frac{\mathrm{d}F}{\mathrm{d}v} \otimes G((v-v_\mathrm{l.o.s}), v_\sigma)\
+&amp;\propto  \int_{-v_W}^{v_W} -\frac{1}{\sqrt{v_W^2-v^2}}  \left{ 1 + k \left[ \arccos \left( \frac{v}{v_W} \right) - \frac{\pi}{2} \right] \right} \exp\left(- \frac{(v-v_\mathrm{l.o.s})^2}{2 v_\sigma^2} \right) \mathrm{d}v\
+&amp;=\int_0^\pi [1 + k(\phi - \pi/2)]\exp\left(- \frac{(v_W \cos \phi - v_\mathrm{l.o.s})^2}{2 v_\sigma^2}  \right) \mathrm{d}\phi\
+&amp;=\int_{-\pi/2}^{\pi/2} [1 + k\varphi]\exp\left(- \frac{(-v_W \sin \varphi - v_\mathrm{l.o.s})^2}{2 v_\sigma^2}  \right) \mathrm{d}\varphi
+\end{split}\end{equation}</p>
+<p>This integration is currently analytically infeasible because of the <span class="math notranslate nohighlight">\(\int_0^\pi \phi \exp(-a\cos \phi)\mathrm{d}\phi\)</span> term. The integral flux in the line is <span class="math notranslate nohighlight">\(\sqrt{2 \pi} v_\sigma \pi\)</span>.</p>
+<p>Shown below is an example with <span class="math notranslate nohighlight">\(v_\sigma=10 \ \mathrm{km/s}\)</span>, such that <span class="math notranslate nohighlight">\(v_\mathrm{fwhm}=10 * 2.355 \ \mathrm{km/s}\)</span> and other parameters same as before.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># asymmetric single speed disk with velocity dispersion</span>
+<span class="n">v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span> <span class="o">=</span> <span class="mi">200</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">30</span><span class="o">/</span><span class="mi">180</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">10</span>
+<span class="n">dv</span><span class="p">,</span> <span class="n">dphi</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">300</span>
+<span class="n">v_los</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">v_r</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="n">v_r</span><span class="o">+</span><span class="mi">50</span><span class="p">,</span> <span class="n">dv</span><span class="p">)</span>
+
+<span class="c1"># numerical integration</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">v_r</span> <span class="o">-</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">v_sigma</span> <span class="o">&lt;</span> <span class="n">v_los</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">v_los</span> <span class="o">&lt;</span> <span class="n">v_r</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">v_sigma</span><span class="p">)</span>
+<span class="n">vv_los</span> <span class="o">=</span> <span class="n">v_los</span><span class="p">[</span><span class="n">flag</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">phiphi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">dphi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dphi</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sinphi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phiphi</span><span class="p">)</span>
+<span class="n">line_disk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">v_los</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">line_disk</span><span class="p">[</span><span class="n">flag</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">k</span> <span class="o">*</span> <span class="n">phiphi</span><span class="p">)</span> <span class="o">*</span>
+                   <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">v_r</span> <span class="o">*</span> <span class="n">sinphi</span> <span class="o">+</span> <span class="n">vv_los</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span>
+                          <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">v_sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)))</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> \
+                  <span class="o">*</span> <span class="n">dphi</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="n">v_sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+
+<span class="c1"># plot the spectrum</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">v_los</span><span class="p">,</span> <span class="n">line_disk</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$v_\mathrm{l.o.s.}$&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">.05</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/tutorial_introduction_16_0.png" src="_images/tutorial_introduction_16_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="add-a-gaussian-component">
+<h2>Add a gaussian component<a class="headerlink" href="#add-a-gaussian-component" title="Permalink to this heading">¶</a></h2>
+<p>A gaussian shaped peak is added to the profile in order to (1) fill in the trough of disk profile so as to generate profiles of different horn-trough contrast; (2) represent the single gaussian-like spectral line; (3) describe the broad wing beyond the disk profile. The width of the gaussian component is controlled by variable <span class="math notranslate nohighlight">\(v_g\)</span>, which is the STD <span class="math notranslate nohighlight">\(\sigma\)</span> of the gaussian peak.
+\begin{equation}\begin{split}
+\frac{\mathrm{d}F}{\mathrm{d}v_\mathrm{l.o.s}} = \frac{1}{\sqrt{2 \pi v_g^2}}\exp\left[ -\frac{v_\mathrm{l.o.s}^2}{2v_g^2} \right]
+\end{split}\end{equation}</p>
+<p>Below is a sample of <span class="math notranslate nohighlight">\(v_g= 150/2.355 \ \mathrm{km/s}\)</span> so that <span class="math notranslate nohighlight">\(v_\mathrm{fwhm}=150\ \mathrm{km/s}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># gaussian component model</span>
+<span class="n">v_g</span> <span class="o">=</span> <span class="mi">150</span><span class="o">/</span><span class="mf">2.355</span>
+<span class="n">dv</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">v_los</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="n">dv</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">v_los</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">v_los</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">v_g</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">v_g</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$v_\mathrm{l.o.s.}$&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/tutorial_introduction_20_0.png" src="_images/tutorial_introduction_20_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="assemble-a-galaxy">
+<h1>Assemble a galaxy<a class="headerlink" href="#assemble-a-galaxy" title="Permalink to this heading">¶</a></h1>
+<p>The gaussian component is connected with the disk part by the disk flux fraction <span class="math notranslate nohighlight">\(r\)</span>, and governed by line flux <span class="math notranslate nohighlight">\(F\)</span>.</p>
+<p>The generic expression of the model is
+\begin{equation}\begin{split}
+\frac{\mathrm{d}F}{\mathrm{d}v} = F \times \bigg{&amp; \frac{r}{\sqrt{2\pi} v_\sigma \pi} \int_0^\pi [1 + k(\varphi - \pi/2)]\exp\left[- \frac{(v_r \cos \varphi + v_c - v)^2}{2 v_\sigma^2}  \right] \mathrm{d} \varphi + \
+&amp; \frac{1-r}{\sqrt{2\pi} v_g} \exp \left[-\frac{(v_c - v)^2}{2 v_g^2} \right] \bigg}
+\end{split}\end{equation}</p>
+<p>Below is an example combining the disk and gaussian components described above, with <span class="math notranslate nohighlight">\(F=2\)</span> Jy km/s and <span class="math notranslate nohighlight">\(r=1-0.15=0.85\)</span>. We use the built-in function in the PANDISC package to evaluate the spectra.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandisc</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># disk + gaussian</span>
+<span class="n">v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span> <span class="o">=</span> <span class="mi">200</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">30</span><span class="o">/</span><span class="mi">180</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">10</span>
+<span class="n">v_g</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">150</span><span class="o">/</span><span class="mf">2.355</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="mf">0.15</span>
+<span class="n">F</span><span class="p">,</span> <span class="n">v_c</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span>
+
+<span class="n">v_los</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="n">line_disk</span> <span class="o">=</span> <span class="n">pandisc</span><span class="o">.</span><span class="n">disk</span><span class="p">(</span><span class="n">v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">F</span> <span class="o">*</span> <span class="n">r</span><span class="p">,</span> <span class="n">v_c</span><span class="p">,</span> <span class="n">v_los</span><span class="p">)</span>
+<span class="n">line_gauss</span> <span class="o">=</span> <span class="n">pandisc</span><span class="o">.</span><span class="n">gaussian</span><span class="p">(</span><span class="n">v_g</span><span class="p">,</span> <span class="n">F</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r</span><span class="p">),</span> <span class="n">v_c</span><span class="p">,</span> <span class="n">v_los</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">v_los</span><span class="p">,</span> <span class="p">(</span><span class="n">line_disk</span> <span class="o">+</span> <span class="n">line_gauss</span><span class="p">),</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;line model&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">v_los</span><span class="p">,</span> <span class="n">line_disk</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;disk&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">v_los</span><span class="p">,</span> <span class="n">line_gauss</span><span class="p">,</span> <span class="s1">&#39;-.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$v_\mathrm{l.o.s.}$ [km/s]&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;F [Jy]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/tutorial_introduction_25_0.png" src="_images/tutorial_introduction_25_0.png" />
+</div>
+</div>
+<div class="section" id="computing-widths">
+<h2>Computing widths<a class="headerlink" href="#computing-widths" title="Permalink to this heading">¶</a></h2>
+<p>And we can get the <span class="math notranslate nohighlight">\(W50_\mathrm{model}\)</span> and peak-to-peak width of this spectral by call the function <code class="docutils literal notranslate"><span class="pre">w50m()</span></code> and <code class="docutils literal notranslate"><span class="pre">disk_peak_width()</span></code> respectively like below. As you can see, The values of <span class="math notranslate nohighlight">\(W50_\mathrm{model}\)</span>, <span class="math notranslate nohighlight">\(W_\mathrm{peak}\)</span> and <span class="math notranslate nohighlight">\(2 v_r\)</span> are all different.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w50m</span> <span class="o">=</span> <span class="n">pandisc</span><span class="o">.</span><span class="n">w50m</span><span class="p">(</span><span class="n">v_r</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">v_g</span><span class="p">)</span>
+<span class="n">wp</span> <span class="o">=</span> <span class="n">pandisc</span><span class="o">.</span><span class="n">disk_peak_width</span><span class="p">(</span><span class="n">v_r</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;W50m: </span><span class="si">%.2f</span><span class="se">\n</span><span class="s2">Wp: </span><span class="si">%.2f</span><span class="se">\n</span><span class="s2">2 v_r: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">w50m</span><span class="p">,</span> <span class="n">wp</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">v_r</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>W50m: 211.29
+Wp: 185.00
+2 v_r: 200.00
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">v_los</span><span class="p">,</span> <span class="p">(</span><span class="n">line_disk</span> <span class="o">+</span> <span class="n">line_gauss</span><span class="p">),</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;line model&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">v_los</span><span class="p">,</span> <span class="n">line_disk</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;disk&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">v_los</span><span class="p">,</span> <span class="n">line_gauss</span><span class="p">,</span> <span class="s1">&#39;-.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;gaussian&quot;</span><span class="p">)</span>
+
+<span class="n">ylim</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">width</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">wp</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">v_r</span><span class="p">,</span> <span class="n">w50m</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;k&quot;</span><span class="p">),</span> 
+    <span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$W_\mathrm</span><span class="si">{peak}</span><span class="s2">$&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;2 v_r&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;$W50_\mathrm</span><span class="si">{model}</span><span class="s2">$&quot;</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">ylim</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">ylim</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">ylim</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$v_\mathrm{l.o.s.}$ [km/s]&quot;</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;F [Jy]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/tutorial_introduction_30_0.png" src="_images/tutorial_introduction_30_0.png" />
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="index.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">PANDISC</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="tutorial_fit.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Fitting the model to a galaxy</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Bo Peng<br/>
+        
+            &copy; Copyright 2022, Bo Peng.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

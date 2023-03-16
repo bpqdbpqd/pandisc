@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pandisc.fit &#8212; pandisc 1.0 documentation</title>
+    <title>pandisc.fit &#8212; pandisc 1.1 documentation</title>
     
   <link href="../../_static/css/theme.css" rel="stylesheet">
   <link href="../../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -66,7 +66,7 @@
       
       
       
-      <h1 class="site-logo" id="site-title">pandisc 1.0 documentation</h1>
+      <h1 class="site-logo" id="site-title">pandisc 1.1 documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
@@ -75,6 +75,23 @@
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Jupyter notebook turotials:
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tutorial_introduction.html">
+   Theoretical construction of the model
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../tutorial_fit.html">
+   MCMC fit on ALFALFA spectrum
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Contents:
  </span>
@@ -162,13 +179,18 @@
                 
   <h1>Source code for pandisc.fit</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Functions for MCMC fit formulation</span>
+<span class="sd">Functions for MCMC fit formulation on H I spectra. If you are interested in</span>
+<span class="sd">applying the model on other spectral line, the accepted range of 25 km/s might</span>
+<span class="sd">be too small, so you may want to change pandisc.SIGMA_MAX to higher value</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">.model</span> <span class="kn">import</span> <span class="o">*</span>
 
 
-<div class="viewcode-block" id="pandisc_model_mcmc"><a class="viewcode-back" href="../../pandisc.html#pandisc.fit.pandisc_model_mcmc">[docs]</a><span class="k">def</span> <span class="nf">model_mcmc</span><span class="p">(</span><span class="n">para_mcmc</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
+<span class="n">V_SIGMA_MAX</span> <span class="o">=</span> <span class="mi">25</span>  <span class="c1"># default maximal acceptable value of v_sigma in km/s</span>
+
+
+<div class="viewcode-block" id="model_mcmc"><a class="viewcode-back" href="../../pandisc.html#pandisc.fit.model_mcmc">[docs]</a><span class="k">def</span> <span class="nf">model_mcmc</span><span class="p">(</span><span class="n">para_mcmc</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    helper function for MCMC fit, to generate line model from the parameters</span>
 <span class="sd">    used in fitting</span>
@@ -176,17 +198,20 @@
 <span class="sd">    :param para_mcmc: list or tuple or array, containing the seven parameters</span>
 <span class="sd">        used for MCMC fit, in the oder of (lg_v_r, k, v_sigma, r, lg_v_g, f, v_c)</span>
 <span class="sd">    :type para_mcmc: list or tuple or numpy.ndarray</span>
-<span class="sd">    :param numpy.ndarray v_arr: array, recording the axis to compute the model</span>
-<span class="sd">    :return: array of the computed model</span>
-<span class="sd">    :rtype: numpy.ndarray</span>
+<span class="sd">    :param v_arr: array, recording the axis to compute the model</span>
+<span class="sd">    :type v_arr: numpy.ndarray or float</span>
+<span class="sd">    :return: array of the computed model, in the same shape as input v_arr</span>
+<span class="sd">    :rtype: numpy.ndarray or float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">lg_v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">lg_v_g</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span> <span class="o">=</span> <span class="n">para_mcmc</span>
+    <span class="n">v_r</span><span class="p">,</span> <span class="n">v_g</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">lg_v_r</span><span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">lg_v_g</span>
 
-    <span class="k">return</span> <span class="n">pandisc_model</span><span class="p">([</span><span class="mi">10</span><span class="o">**</span><span class="n">lg_v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">lg_v_g</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span><span class="p">],</span> <span class="n">v_arr</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">model</span><span class="p">(</span><span class="n">v_r</span><span class="o">=</span><span class="n">v_r</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="o">=</span><span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">v_g</span><span class="o">=</span><span class="n">v_g</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="n">f</span><span class="p">,</span>
+                 <span class="n">v_c</span><span class="o">=</span><span class="n">v_c</span><span class="p">,</span> <span class="n">v_arr</span><span class="o">=</span><span class="n">v_arr</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="pandisc_model_mcmc_parts"><a class="viewcode-back" href="../../pandisc.html#pandisc.fit.pandisc_model_mcmc_parts">[docs]</a><span class="k">def</span> <span class="nf">model_mcmc_parts</span><span class="p">(</span><span class="n">para_mcmc</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
+<div class="viewcode-block" id="model_mcmc_parts"><a class="viewcode-back" href="../../pandisc.html#pandisc.fit.model_mcmc_parts">[docs]</a><span class="k">def</span> <span class="nf">model_mcmc_parts</span><span class="p">(</span><span class="n">para_mcmc</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    return the disk and gaussian components separately using the set of the</span>
 <span class="sd">    parameters used in MCMC fit</span>
@@ -194,15 +219,47 @@
 <span class="sd">    :param para_mcmc: list or tuple or array, containing the seven parameters</span>
 <span class="sd">        used for MCMC fit, in the oder of (lg_v_r, k, v_sigma, r, lg_v_g, f, v_c)</span>
 <span class="sd">    :type para_mcmc: list or tuple or numpy.ndarray</span>
-<span class="sd">    :param numpy.ndarray v_arr: array, recording the axis to compute the model</span>
-<span class="sd">    :return: array of the computed model</span>
-<span class="sd">    :rtype: numpy.ndarray</span>
+<span class="sd">    :param v_arr: array, recording the axis to compute the model</span>
+<span class="sd">    :type v_arr: numpy.ndarray or float</span>
+<span class="sd">    :return: (disk, gaussian) parts of the model, each part is in the same shape</span>
+<span class="sd">        as input v_arr</span>
+<span class="sd">    :rtype: tuple[numpy.ndarray or float, numpy.ndarray or float]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">lg_v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">lg_v_g</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span> <span class="o">=</span> <span class="n">para_mcmc</span>
+    <span class="n">v_r</span><span class="p">,</span> <span class="n">v_g</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">lg_v_r</span><span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">lg_v_g</span>
 
-    <span class="k">return</span> <span class="n">model_parts</span><span class="p">(</span>
-            <span class="p">[</span><span class="mi">10</span><span class="o">**</span><span class="n">lg_v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">lg_v_g</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span><span class="p">],</span> <span class="n">v_arr</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">model_parts</span><span class="p">(</span><span class="n">v_r</span><span class="o">=</span><span class="n">v_r</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="o">=</span><span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">v_g</span><span class="o">=</span><span class="n">v_g</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="n">f</span><span class="p">,</span>
+                       <span class="n">v_c</span><span class="o">=</span><span class="n">v_c</span><span class="p">,</span> <span class="n">v_arr</span><span class="o">=</span><span class="n">v_arr</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ln_priori_flat"><a class="viewcode-back" href="../../pandisc.html#pandisc.fit.ln_priori_flat">[docs]</a><span class="k">def</span> <span class="nf">ln_priori_flat</span><span class="p">(</span><span class="n">para_mcmc</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    a flat priori function defined in the paper, only checking the range of the</span>
+<span class="sd">    input parameters</span>
+
+<span class="sd">    :param para_mcmc: list or tuple or array, containing the seven parameters</span>
+<span class="sd">        used for MCMC fit, in the oder of (lg_v_r, k, v_sigma, r, lg_v_g, f, v_c)</span>
+<span class="sd">    :type para_mcmc: list or tuple or numpy.ndarray</span>
+<span class="sd">    :param numpy.ndarray v_arr: array, recording the axis to compute the model</span>
+<span class="sd">    :return: float, log e of the priori</span>
+<span class="sd">    :rtype: float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">lg_v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">lg_v_g</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span> <span class="o">=</span> <span class="n">para_mcmc</span>
+    <span class="n">v_r</span><span class="p">,</span> <span class="n">v_g</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">lg_v_r</span><span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">lg_v_g</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="mi">5</span> <span class="o">&lt;</span> <span class="n">v_r</span> <span class="o">&lt;</span> <span class="mi">500</span><span class="p">)</span> <span class="ow">and</span> <span class="o">-</span><span class="mi">2</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">&lt;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="ow">and</span> \
+            <span class="mi">3</span> <span class="o">&lt;</span> <span class="n">v_sigma</span> <span class="o">&lt;</span> <span class="n">V_SIGMA_MAX</span> <span class="ow">and</span> \
+            <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">r</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="mf">8.5</span> <span class="o">&lt;</span> <span class="n">v_g</span> <span class="o">&lt;</span> <span class="mi">200</span><span class="p">)</span> <span class="ow">and</span> \
+            <span class="p">(</span><span class="n">v_arr</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">v_c</span> <span class="o">-</span> <span class="n">v_r</span> <span class="o">*</span> <span class="n">r</span><span class="p">)</span> <span class="ow">and</span> \
+            <span class="p">(</span><span class="n">v_c</span> <span class="o">+</span> <span class="n">v_r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="n">v_arr</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="ow">and</span> \
+            <span class="p">(</span><span class="n">v_c</span> <span class="o">-</span> <span class="n">v_r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">&gt;</span> <span class="n">v_arr</span><span class="o">.</span><span class="n">min</span><span class="p">()):</span>
+        <span class="n">priori</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span> <span class="o">/</span> <span class="p">(</span><span class="n">V_SIGMA_MAX</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1.4</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">priori</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+
+    <span class="k">return</span> <span class="n">priori</span></div>
 
 
 <div class="viewcode-block" id="ln_priori"><a class="viewcode-back" href="../../pandisc.html#pandisc.fit.ln_priori">[docs]</a><span class="k">def</span> <span class="nf">ln_priori</span><span class="p">(</span><span class="n">para_mcmc</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">):</span>
@@ -220,17 +277,15 @@
     <span class="n">lg_v_r</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v_sigma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">lg_v_g</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">v_c</span> <span class="o">=</span> <span class="n">para_mcmc</span>
     <span class="n">v_r</span><span class="p">,</span> <span class="n">v_g</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">lg_v_r</span><span class="p">,</span> <span class="mi">10</span><span class="o">**</span><span class="n">lg_v_g</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="mi">5</span> <span class="o">&lt;</span> <span class="n">v_r</span> <span class="o">&lt;</span> <span class="mi">500</span><span class="p">)</span> <span class="ow">and</span> <span class="o">-</span><span class="mi">2</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">&lt;</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="ow">and</span> <span class="mi">3</span> <span class="o">&lt;</span> <span class="n">v_sigma</span> <span class="o">&lt;</span> <span class="mi">25</span> <span class="ow">and</span> \
-            <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">r</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="mf">8.5</span> <span class="o">&lt;</span> <span class="n">v_g</span> <span class="o">&lt;</span> <span class="mi">200</span><span class="p">)</span> <span class="ow">and</span> \
-            <span class="p">(</span><span class="n">v_arr</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">v_c</span> <span class="o">-</span> <span class="n">v_r</span> <span class="o">*</span> <span class="n">r</span><span class="p">)</span> <span class="ow">and</span> \
-            <span class="p">(</span><span class="n">v_c</span> <span class="o">+</span> <span class="n">v_r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="n">v_arr</span><span class="o">.</span><span class="n">max</span><span class="p">()):</span>
-        <span class="n">priori</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.6</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">r</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">+</span> \
-            <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="mf">0.568</span> <span class="o">/</span> <span class="mi">22</span><span class="p">)</span>
+    <span class="n">priori</span> <span class="o">=</span> <span class="n">ln_priori_flat</span><span class="p">(</span><span class="n">para_mcmc</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">priori</span><span class="p">):</span>
+        <span class="n">priori</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">0.568</span> <span class="o">/</span> <span class="mf">0.786</span><span class="p">)</span> <span class="o">+</span> \
+                  <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">0.44</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> \
                 <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span><span class="o">/</span><span class="n">r</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="n">lg_v_g</span> <span class="o">-</span> <span class="n">lg_v_r</span><span class="p">))</span> <span class="ow">and</span> \
                 <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">.3</span> <span class="o">*</span> <span class="n">v_sigma</span><span class="o">/</span><span class="n">v_r</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="o">**</span><span class="p">(</span><span class="n">lg_v_g</span><span class="o">-</span><span class="n">lg_v_r</span><span class="p">)):</span>
             <span class="n">priori</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r</span><span class="p">)</span><span class="o">/</span><span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">v_r</span> <span class="o">-</span> <span class="n">v_g</span><span class="p">),</span>
-                                 <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">v_r</span> <span class="o">+</span> <span class="mf">.6</span> <span class="o">*</span> <span class="n">v_sigma</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="o">/</span> <span class="n">v_g</span><span class="p">))</span>
+                                 <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">v_r</span> <span class="o">+</span> <span class="mf">.6</span> <span class="o">*</span> <span class="n">v_sigma</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">v_g</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">priori</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
     <span class="k">return</span> <span class="n">priori</span></div>
@@ -252,8 +307,8 @@
 <span class="sd">    :rtype: float</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">model</span> <span class="o">=</span> <span class="n">model_mcmc</span><span class="p">(</span><span class="n">para_mcmc</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">)</span>
-    <span class="n">likelihood</span> <span class="o">=</span> <span class="o">-</span> <span class="p">((</span><span class="n">spec</span> <span class="o">-</span> <span class="n">model</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">line_model</span> <span class="o">=</span> <span class="n">model_mcmc</span><span class="p">(</span><span class="n">para_mcmc</span><span class="p">,</span> <span class="n">v_arr</span><span class="p">)</span>
+    <span class="n">likelihood</span> <span class="o">=</span> <span class="o">-</span> <span class="p">((</span><span class="n">spec</span> <span class="o">-</span> <span class="n">line_model</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
     <span class="k">return</span> <span class="n">likelihood</span></div>
 
