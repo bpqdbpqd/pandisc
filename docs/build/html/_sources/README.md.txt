@@ -1,6 +1,6 @@
 Parametrized Asymmetric Neutral hydrogen Disk Integrated Spectral Characterization (PANDISC) model is developed to study 
 the integrated H I spectrum. The formulation and features of the model can be found in 
-[Peng et al. 2023](https://arxiv.org/abs/2211.16455).
+[Peng et al. 2023](https://ui.adsabs.harvard.edu/abs/2022arXiv221116455P/abstract).
 
 The package is composed of two submodules
 
