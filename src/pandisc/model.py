@@ -13,7 +13,7 @@ def disk(v_r, k, v_sigma, f, v_c, v_arr):
 
     :param float v_r: float, rotation velocity of the disk
     :param float k: float, gradient of the angular distribution, defining the
-        asymmetry of the line, should be in the range (−2/𝜋,2/𝜋)
+        asymmetry of the line, should be in the range (-2/pi,2/pi)
     :param float v_sigma: float, sigma of the disk velocity dispersion
     :param float f: float, the integrated flux integrate(f_model dv) of the model
     :param float v_c: float, velocity of the line center
@@ -66,7 +66,7 @@ def model(v_r, k, v_sigma, r, v_g, f, v_c, v_arr):
 
     :param float v_r: float, rotation velocity of the disk
     :param float k: float, gradient of the angular distribution, defining the
-        asymmetry of the line, should be in the range (−2/𝜋,2/𝜋)
+        asymmetry of the line, should be in the range (-2/pi,2/pi)
     :param float v_sigma: float, sigma of the disk velocity dispersion
     :param float r: float, fraction of the integrated flux in the disk component
     :param float v_g: float, sigma of the gaussian peak
@@ -90,7 +90,7 @@ def model_parts(v_r, k, v_sigma, r, v_g, f, v_c, v_arr):
 
     :param float v_r: float, rotation velocity of the disk
     :param float k: float, gradient of the angular distribution, defining the
-        asymmetry of the line, should be in the range (−2/𝜋,2/𝜋)
+        asymmetry of the line, should be in the range (-2/pi,2/pi)
     :param float v_sigma: float, sigma of the disk velocity dispersion
     :param float r: float, fraction of the integrated flux in the disk component
     :param float v_g: float, sigma of the gaussian peak
