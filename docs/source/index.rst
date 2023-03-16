@@ -3,7 +3,7 @@ PANDISC
 
 .. toctree::
    :maxdepth: 1
-   :caption: Jupyter notebook turotials:
+   :caption: Jupyter notebook tutotials:
 
    Introduction of the model <tutorial_introduction>
    MCMC fit on ALFALFA spectrum <tutorial_fit>
